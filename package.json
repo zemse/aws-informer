@@ -12,9 +12,7 @@
   "author": "Soham Zemse",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.5.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.6.2"
+    "axios": "^1.5.0",
+    "dotenv": "^16.3.1"
   }
 }
