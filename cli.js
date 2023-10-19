@@ -20,11 +20,15 @@ async function main() {
   }
 
   await send(`execution started for: ${command}`);
-  const startTime = Date.now();
-  const result = await execWithPrint(command);
-  const endTime = Date.now();
-  await send(`execution finished, time: ${(endTime - startTime) / 1000} sec`);
-  await send("output: " + result);
+  try {
+    const startTime = Date.now();
+    const result = await execWithPrint(command);
+    const endTime = Date.now();
+    await send(`execution finished, time: ${(endTime - startTime) / 1000} sec`);
+    await send("output: " + result);
+  } catch (e) {
+    await send("there was error: " + JSON.stringify(e));
+  }
 }
 
 function execWithPrint(command) {
