@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { exec, execSync } = require("child_process");
+const { spawn } = require("child_process");
 const { send } = require("./messaging/telegram");
 
 const { config } = require("dotenv");
@@ -21,10 +21,29 @@ async function main() {
 
   await send(`execution started for: ${command}`);
   const startTime = Date.now();
-  const result = execSync(command);
+  const result = await execWithPrint(command);
   const endTime = Date.now();
   await send(`execution finished, time: ${(endTime - startTime) / 1000} sec`);
-  await send(result);
+  await send("output: " + result);
+}
+
+function execWithPrint(command) {
+  let arr = command.split(" ");
+  let pc = spawn(arr[0], arr.slice(1));
+  let output = "";
+  pc.stdout.on("data", (data) => {
+    process.stdout.write(data);
+    output += data.toString();
+  });
+  pc.stderr.on("data", (data) => {
+    process.stderr.write(data);
+    output += data.toString();
+  });
+  return new Promise((resolve) => {
+    pc.on("close", () => {
+      resolve(output);
+    });
+  });
 }
 
 main().then(() => process.exit(0));
