@@ -12,6 +12,12 @@ async function main() {
     console.log(require("./package.json").version);
     process.exit(0);
   }
+  if (command === "--test") {
+    console.log("sending a test message");
+    await send("this is a test message");
+    console.log("sent");
+    process.exit(0);
+  }
 
   await send(`execution started for: ${command}`);
   const startTime = Date.now();
