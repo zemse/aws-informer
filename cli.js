@@ -5,10 +5,17 @@ const { send } = require("./messaging/telegram");
 const { config } = require("dotenv");
 config({ path: "~/.aws-informer.env" });
 
+let command = process.argv.slice(2).join(" ");
+
 async function main() {
-  await send(`execution started for: ${process.argv.slice(2).join(" ")}`);
+  if (command === "--version") {
+    console.log(require("./package.json").version);
+    process.exit(0);
+  }
+
+  await send(`execution started for: ${command}`);
   const startTime = Date.now();
-  const result = execSync(process.argv.slice(2).join(" "));
+  const result = execSync(command);
   const endTime = Date.now();
   await send(`execution finished, time: ${(endTime - startTime) / 1000} sec`);
   await send(result);
