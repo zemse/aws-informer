@@ -40,3 +40,7 @@ TELEGRAM_BOT_TOKEN=214554873:BAFaRuRwRyRRX-ncRSRS4q8QRBpGRnpRBRg # this is examp
 TELEGRAM_CHAT_ID=834835405 # this is your chat id (unique to your telegram account)
 ```
 6. Try `informer --test`. It should send you a test message.
+
+## example of dms
+
+![alt](./message.png)
